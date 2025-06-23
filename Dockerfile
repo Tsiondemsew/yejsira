@@ -14,8 +14,8 @@ RUN apt-get update && apt-get install -y \
     sqlite3 \
     libsqlite3-dev
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo pdo_sqlite
+# Install PHP extensions including SQLite
+RUN docker-php-ext-install pdo pdo_sqlite mbstring zip exif pcntl
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -23,16 +23,16 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Set working directory
 WORKDIR /app
 
-# Copy all files
+# Copy all project files
 COPY . .
 
-# Copy .env.example to .env
+# Copy .env file
 RUN cp .env.example .env
 
 # Install PHP dependencies
 RUN composer install
 
-# Generate app key
+# Generate Laravel key
 RUN php artisan key:generate
 
 # Expose port
