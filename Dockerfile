@@ -26,10 +26,13 @@ WORKDIR /app
 # Copy all files
 COPY . .
 
+# Copy .env.example to .env
+RUN cp .env.example .env
+
 # Install PHP dependencies
 RUN composer install
 
-# Generate Laravel key
+# Generate app key
 RUN php artisan key:generate
 
 # Expose port
