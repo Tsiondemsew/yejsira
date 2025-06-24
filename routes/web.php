@@ -34,7 +34,7 @@ use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 
 require __DIR__.'/auth.php';
 
-
+ 
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/products', [ProductController::class, 'index'])->name('products');
