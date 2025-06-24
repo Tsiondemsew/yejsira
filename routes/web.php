@@ -34,7 +34,14 @@ use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 
 require __DIR__.'/auth.php';
 
- 
+ Route::get('/debug-db', function () {
+    return response()->json([
+        'pdo_pgsql_loaded' => extension_loaded('pdo_pgsql'),
+        'db_driver' => config('database.default'),
+        'env_db' => env('DB_CONNECTION'),
+    ]);
+});
+
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/products', [ProductController::class, 'index'])->name('products');
