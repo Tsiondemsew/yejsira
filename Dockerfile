@@ -1,7 +1,7 @@
 # Use PHP 8.2 CLI image
 FROM php:8.2-cli
 
-# Install dependencies
+    # Install system dependencies
 RUN apt-get update && apt-get install -y \
     unzip \
     zip \
@@ -11,8 +11,9 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    libpq-dev \
-    libssl-dev
+    libpq-dev \  # This is critical for PostgreSQL
+    && docker-php-ext-install pdo pdo_pgsql mbstring zip exif pcntl opcache \
+    && a2enmod rewrite
 
 # Install required PHP extensions including PostgreSQL
 RUN docker-php-ext-install pdo pdo_pgsql mbstring zip exif pcntl
